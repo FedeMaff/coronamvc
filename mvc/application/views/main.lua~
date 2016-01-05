@@ -37,10 +37,10 @@
 				
 				if self.data.pagina == 1 then
 				
-					mvc.main:test2()
+					mvc.demo:test2()
 				else
 				
-					mvc.main:test3()
+					mvc.demo:test3()
 				end
 			end
 		end

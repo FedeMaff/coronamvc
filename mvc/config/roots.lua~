@@ -11,6 +11,6 @@
 	--------------------------------------------------------
 	roots.main = { 
 		
-		controller  = "main", 
-		method 	    = "test" 
+		controller  = "demo", 
+		method 		= "test" 
 	}
