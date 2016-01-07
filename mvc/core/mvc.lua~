@@ -163,12 +163,6 @@
 		end
 	end
 	
-	function Mvc:back()
-	end
-	
-	function Mvc:back_to()
-	end
-	
 	function Mvc:delete_view( view_object )
 		
 		for n,view in pairs(self.views) do
