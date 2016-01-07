@@ -27,4 +27,5 @@
 	-- ----------------------------------------------
 	-- Animations details
 	-- ----------------------------------------------
-	DEFAULT_ANIMATION = "BASE"
+	DEFAULT_NEXT_ANIMATION = "SLIDE_LEFT"
+	DEFAULT_BACK_ANIMATION = "SLIDE_RIGHT"

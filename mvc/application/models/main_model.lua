@@ -9,7 +9,7 @@
 	
 	function Main_model:prova()
 		
-		local par = { label = "Clickme!", pagina = 1}
+		local par = { label = "Pagina numero 1!", pagina = 1}
 		
 		return par
 		
@@ -17,7 +17,15 @@
 	
 	function Main_model:prova2()
 		
-		local par = { label = "This is lua MVC!", pagina = 2}
+		local par = { label = "Pagina numero 2!", pagina = 2}
+		
+		return par
+		
+	end
+	
+	function Main_model:prova3()
+		
+		local par = { label = "Pagina numero 3!", pagina = 3}
 		
 		return par
 		

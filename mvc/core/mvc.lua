@@ -60,6 +60,20 @@
 		
 	end
 	
+	function Mvc:get_back_view( name )
+		
+		for i=1, #self.views, 1 do
+			
+			if name == self.views[i].name and i > 1 then
+				
+				return self.views[i-1]
+			
+			end	
+		end
+		
+		return false
+	end
+	
 	function Mvc:get_view_content_of( name )
 		
 		local view = self:get_view( name )
@@ -156,17 +170,58 @@
 			table.insert( self.views, #self.views+1, view )
 			
 			delete 	  = delete or false
-			animation = animation or DEFAULT_ANIMATION
+			animation = animation or DEFAULT_NEXT_ANIMATION
 			
 			Animations[animation]( view, self:get_view( parent_name ), delete)
 			
 		end
 	end
 	
-	function Mvc:back()
+	function Mvc:back( view, animation )
+		
+		if view ~= nil then
+			
+			animation 	 = animation or DEFAULT_BACK_ANIMATION
+			Animations[animation]( self:get_back_view( view ), self:get_view( view ), true)
+			
+		end
 	end
 	
-	function Mvc:back_to()
+	function Mvc:back_to(view, target_view, animation )
+		
+		if view ~= nil and target_view ~= nil then
+			
+			animation 	 = animation or DEFAULT_BACK_ANIMATION
+			
+			local destinazione = self:get_view( target_view )
+			local partenza 	   = self:get_view( view )
+			
+			Animations[animation]( destinazione, partenza, true)
+			
+			self:delete_after_view( destinazione )
+			
+		end
+		
+	end
+	
+	function Mvc:delete_after_view( view_object )
+		
+		local delete = false
+		
+		for n,view in pairs(self.views) do
+			
+			if delete == true then
+				
+				view.view:Delete()
+				view.group:removeSelf()
+				table.remove( self.views, n )
+			end
+			
+			if view_object.name == view.name then
+			
+				delete = true
+			end	
+		end
 	end
 	
 	function Mvc:delete_view( view_object )

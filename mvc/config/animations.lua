@@ -31,6 +31,9 @@
 			if delete == true then
 				mvc:delete_view(OldView)
 			end
+			
+			NewView.group.x = 0
+			NewView.group.y = 0
 			NewView.view:Show()
 			
 		end, 1)

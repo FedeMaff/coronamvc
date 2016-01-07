@@ -38,9 +38,13 @@
 				if self.data.pagina == 1 then
 				
 					mvc.main:test2()
-				else
+					
+				elseif self.data.pagina == 2 then
 				
 					mvc.main:test3()
+				else
+				
+					mvc.main:test4()
 				end
 			end
 		end
