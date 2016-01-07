@@ -14,21 +14,128 @@
 		return setmetatable( data, Mvc_)
 	end	
 	
+	function Mvc:class_exists(class_name)
+		
+		for name,class in pairs(self) do
+			
+			if name == class_name then
+				
+				return true
+			end
+		end
+		
+		return false
+	end
+	
 	function Mvc:start()
+		
+		-- ----------------------------------------------
+		-- System libraries
+		-- ----------------------------------------------
+		
+		if DB_NAME ~= nil and type(DB_NAME) == "string" then
+			
+			local resurce = require( LPATH .. ".system.activerecord" )
+			self.db = resurce.new(DB_NAME)
+		
+		end
+		
+		local resurce = require( LPATH .. ".system.error" )
+		self.error = resurce.new()
+		
+		-- ----------------------------------------------
+		-- Custom models
+		-- ----------------------------------------------
 		
 		for i,model in pairs( self.autoload.models ) do
 			
-			local resurce = require( MPATH .. "." .. model )
-			self[model] = resurce.new()
+			if self:class_exists(model) == false then
 				
+				local resurce, load_resurce = {}, nil
+				
+				load_resurce = function()
+					
+					resurce = require( MPATH .. "." .. model )
+				end
+				
+				if pcall(load_resurce) then
+					
+					self[model] = resurce.new()
+				else
+				
+					self.error:die(2,{"il modello", MPATH .. "." .. model})
+				end
+			
+			else
+				
+				self.error:die(1,{"il modello", model})
+			end
 		end
+		
+		
+		-- ----------------------------------------------
+		-- Custom controllers
+		-- ----------------------------------------------
 		
 		for i,controller in pairs( self.autoload.controllers ) do
 			
-			local resurce = require( CPATH .. "." .. controller )
-			self[controller] = resurce.new()
+			if self:class_exists(model) == false then
+				
+				local resurce, load_resurce = {}, nil
+				
+				load_resurce = function()
+					
+					resurce = require( CPATH .. "." .. controller )
+				end
+				
+				if pcall(load_resurce) then
+					
+					self[controller] = resurce.new()
+				else
+				
+					self.error:die(2,{"il controller", CPATH .. "." .. controller})
+				end
+			else
+				
+				self.error:die(1,{"il controller", controller})
+			end
 				
 		end
+		
+		-- ----------------------------------------------
+		-- Custom libraries
+		-- ----------------------------------------------
+		
+		for i,lib in pairs( self.autoload.libraries ) do
+			
+			if self:class_exists(lib) == false then
+				
+				local resurce, load_resurce = {}, nil
+				
+				load_resurce = function()
+					
+					resurce = require( LPATH .. "." .. lib )
+				end
+				
+				if pcall(load_resurce) then
+					
+					self[lib] = resurce.new()
+				else
+				
+					self.error:die(2,{"la libreria", LPATH .. "." .. lib})
+				end
+				
+			else
+				
+				self.error:die(1,{"la libreria", lib})
+			end
+				
+		end
+			
+		
+		-- ----------------------------------------------
+		-- Load default controller and start app
+		-- ----------------------------------------------
 		
 		for name,class in pairs(self) do
 			
@@ -41,7 +148,6 @@
 		end
 		
 		self.group = display.newGroup()
-		
 		
 	end
 	

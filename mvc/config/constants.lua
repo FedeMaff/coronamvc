@@ -8,6 +8,7 @@
 	CPATH   	= APPPATH .. '.controllers'
 	MPATH   	= APPPATH .. '.models'
 	VPATH   	= APPPATH .. '.views'
+	LPATH   	= APPPATH .. '.libraries'
 	
 	
 	-- ----------------------------------------------
@@ -29,3 +30,9 @@
 	-- ----------------------------------------------
 	DEFAULT_NEXT_ANIMATION = "SLIDE_LEFT"
 	DEFAULT_BACK_ANIMATION = "SLIDE_RIGHT"
+	
+	
+	-- ----------------------------------------------
+	-- Database information
+	-- ----------------------------------------------
+	DB_NAME = "kimi"

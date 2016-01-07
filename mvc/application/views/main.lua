@@ -79,8 +79,6 @@
 	-- Delete is a required method of object view istance
 	--------------------------------------------------------
 	function View:Delete()
-		
-		print( "Delete " .. "main view" )
 	end	
 	
 	return View	
